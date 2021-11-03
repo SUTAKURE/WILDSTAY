@@ -1,30 +1,11 @@
 import React from 'react';
 import { Marker, Popup } from 'react-leaflet';
-import useSWR from 'swr';
+import GetMapInfo from 'lib/getMapInfo/getmapinfo';
 
 import 'leaflet/dist/leaflet.css';
 
-type usr = {
-  data: dbmodel[];
-  isLoading: any;
-  isError: any;
-};
-
-interface dbmodel {
-  id: number;
-  name: string;
-  lat: number;
-  lon: number;
-  price: number;
-  shower: number;
-  water: number;
-  toilet: number;
-  roof: number;
-  parking: number;
-}
-
 const MapPoint = () => {
-  const { data, isLoading, isError } = useHelloSwr();
+  const { data, isLoading, isError } = GetMapInfo();
   if (isLoading) return <div>Loading</div>;
   if (isError) return <div>Error</div>;
   return (
@@ -75,16 +56,5 @@ function generateGoogleMapUrl(lat: number, lon: number): string {
     'https://www.google.co.jp/maps/search/' + lat + ',+' + lon + '/@' + lat + ',' + lon + ',17z'
   );
 }
-
-function useHelloSwr(): usr {
-  const { data, error } = useSWR(`/api/mapinfo`, fetcher);
-  return {
-    data,
-    isLoading: !error && !data,
-    isError: error,
-  };
-}
-
-export const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default MapPoint;
