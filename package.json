@@ -5,6 +5,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "db": "node database-init.js",
     "preinstall": "typesync || :",
     "lint": "next lint --dir src",
     "lint-fix": "eslint . --ext .js,jsx,.ts,.tsx --fix",
