@@ -1,17 +1,16 @@
 import React from 'react';
-import { Map as MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { Marker, Popup } from 'react-leaflet';
 import useSWR from 'swr';
 
-import useWindowDimensions from 'lib/dimension/dimension';
 import 'leaflet/dist/leaflet.css';
 
-type GetData = {
-  data: data;
-  isLoading: boolean;
+type usr = {
+  data: dbmodel[];
+  isLoading: any;
   isError: any;
 };
 
-type data = {
+interface dbmodel {
   id: number;
   name: string;
   lat: number;
@@ -22,11 +21,12 @@ type data = {
   toilet: number;
   roof: number;
   parking: number;
-};
+}
 
 const MapPoint = () => {
-  const data = useHelloSwr();
-
+  const { data, isLoading, isError } = useHelloSwr();
+  if (isLoading) return <div>Loading</div>;
+  if (isError) return <div>Error</div>;
   return (
     <>
       {data.map((record, index) => {
@@ -76,11 +76,13 @@ function generateGoogleMapUrl(lat: number, lon: number): string {
   );
 }
 
-function useHelloSwr(): Object {
+function useHelloSwr(): usr {
   const { data, error } = useSWR(`/api/mapinfo`, fetcher);
-  return data;
+  return {
+    data,
+    isLoading: !error && !data,
+    isError: error,
+  };
 }
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
-export default MapPoint;
+export const fetcher = (url: string) => fetch(url).then((res) => res.json());
