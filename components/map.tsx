@@ -1,10 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Map as MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
 
-export default class SimpleExample extends Component {
-  render() {
-    return (
-      <MapContainer center={[51.505, -0.09]} zoom={13} scrollWheelZoom={false}>
+const Map = () => {
+  return (
+    <>
+      <MapContainer
+        center={[51.505, -0.09]}
+        zoom={13}
+        scrollWheelZoom={false}
+        style={{ height: 400, width: '100%' }}
+      >
         <TileLayer
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
@@ -15,6 +21,8 @@ export default class SimpleExample extends Component {
           </Popup>
         </Marker>
       </MapContainer>
-    );
-  }
-}
+    </>
+  );
+};
+
+export default Map;
