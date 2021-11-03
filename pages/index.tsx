@@ -5,6 +5,7 @@ function App() {
     () => import('components/map/map'),
     { ssr: false }, // This line is important. It's what prevents server-side render
   );
+
   return <Map />;
 }
 

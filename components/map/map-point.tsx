@@ -1,43 +1,35 @@
-import Leaflet from 'leaflet';
 import React from 'react';
 import { Map as MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import useSWR from 'swr';
+
 import useWindowDimensions from 'lib/dimension/dimension';
 import 'leaflet/dist/leaflet.css';
 
-const MapPoint = () => {
-  // FIXME: 現在はダミーデータなので、後にapiから取得できるようにする。
-  const apidata = [
-    {
-      id: 1,
-      name: '道の駅むかわ',
-      lat: 42.5741851589376,
-      lon: 141.92486292795556,
-      price: 0,
-      shower: 1,
-      water: 1,
-      toilet: 1,
-      roof: 1,
-      parking: 1,
-    },
-    {
-      id: 2,
-      name: '豊幌公園',
-      lat: 43.130335,
-      lon: 141.620074,
-      price: 0,
-      shower: 0,
-      water: 1,
-      toilet: 0,
-      roof: 0,
-      parking: 1,
-    },
-  ];
+type GetData = {
+  data: data;
+  isLoading: boolean;
+  isError: any;
+};
 
-  const map =
-    "https://www.google.co.jp/maps/place/42%C2%B034'24.4%22N+141%C2%B055'29.6%22E/@42.5734547,141.9226982,17z/data=!3m1!4b1!4m5!3m4!1s0x0:0x0!8m2!3d42.5734547!4d141.9248869?hl=ja&authuser=0";
+type data = {
+  id: number;
+  name: string;
+  lat: number;
+  lon: number;
+  price: number;
+  shower: number;
+  water: number;
+  toilet: number;
+  roof: number;
+  parking: number;
+};
+
+const MapPoint = () => {
+  const data = useHelloSwr();
+
   return (
     <>
-      {apidata.map((record, index) => {
+      {data.map((record, index) => {
         return (
           <Marker key={index} position={[record.lat, record.lon]}>
             <Popup>
@@ -84,6 +76,11 @@ function generateGoogleMapUrl(lat: number, lon: number): string {
   );
 }
 
-export default MapPoint;
+function useHelloSwr(): Object {
+  const { data, error } = useSWR(`/api/mapinfo`, fetcher);
+  return data;
+}
 
-// return 'https://www.google.com/maps/search/?api=1&query=' + place;
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+export default MapPoint;

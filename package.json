@@ -21,7 +21,8 @@
     "react-dom": "^16.13.1",
     "react-leaflet": "2.8.0",
     "sqlite": "^4.0.23",
-    "sqlite3": "^5.0.2"
+    "sqlite3": "^5.0.2",
+    "swr": "^1.0.1"
   },
   "devDependencies": {
     "@types/eslint": "7.28.2",
