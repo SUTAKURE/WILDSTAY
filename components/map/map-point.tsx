@@ -86,3 +86,5 @@ function useHelloSwr(): usr {
 }
 
 export const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
+export default MapPoint;
