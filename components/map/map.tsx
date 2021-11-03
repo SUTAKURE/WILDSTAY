@@ -1,9 +1,11 @@
+import Leaflet from 'leaflet';
 import React from 'react';
 import { Map as MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import useWindowDimensions from '../../lib/dimension/dimension';
 import 'leaflet/dist/leaflet.css';
 
 const Map = () => {
+  Leaflet.Icon.Default.imagePath = '//cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/images/';
   const { width, height } = useWindowDimensions();
   return (
     <>
@@ -19,7 +21,14 @@ const Map = () => {
         />
         <Marker position={[51.505, -0.09]}>
           <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
+            <ul>
+              <li>場所：</li>
+              <li>トイレ：</li>
+              <li>水道：</li>
+              <li>屋根：</li>
+              <li>駐車場：</li>
+              <li>Google Mapへ移動：</li>
+            </ul>
           </Popup>
         </Marker>
       </MapContainer>
