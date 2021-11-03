@@ -38,3 +38,6 @@ yarn-error.log*
 
 # package-lock
 package-lock.json
+
+# sqlite
+mydb.sqlite
