@@ -1,10 +1,10 @@
-type model = {
-  data: dbmodel[];
+export type Model = {
+  data: DbModel[];
   isLoading: any;
   isError: any;
 };
 
-interface dbmodel {
+export interface DbModel {
   id: number;
   name: string;
   lat: number;
@@ -16,5 +16,3 @@ interface dbmodel {
   roof: number;
   parking: number;
 }
-
-export default model;

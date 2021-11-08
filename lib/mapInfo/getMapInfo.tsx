@@ -1,8 +1,8 @@
 import useSWR from 'swr';
-import model from 'model/model';
+import type { Model } from 'model/model';
 
-function GetMapInfo(): model {
-  const { data, error } = useSWR(`/api/mapinfo`, fetcher);
+export default function GetMapInfo(): Model {
+  const { data, error } = useSWR(`/api/getMapInfo`, fetcher);
   return {
     data,
     isLoading: !error && !data,
@@ -11,5 +11,3 @@ function GetMapInfo(): model {
 }
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
-export default GetMapInfo;

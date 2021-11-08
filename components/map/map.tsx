@@ -1,7 +1,7 @@
 import Leaflet from 'leaflet';
 import React from 'react';
 import { Map as MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import MapPoint from './map-point';
+import MapPoint from './mapPoint';
 import useWindowDimensions from 'lib/dimension/dimension';
 import 'leaflet/dist/leaflet.css';
 

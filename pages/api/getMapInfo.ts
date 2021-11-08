@@ -7,7 +7,5 @@ export default async function getMapInfo(req: NextApiRequest, res: NextApiRespon
   //db接続
   const db = await open({ filename: './mydb.sqlite', driver: sqlite3.Database });
 
-  const people = await db.all('select * from mapinfo');
-
-  res.json(people);
+  res.json(await db.all('select * from mapinfo'));
 }

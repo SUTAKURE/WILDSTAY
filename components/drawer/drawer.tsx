@@ -1,26 +1,48 @@
+import Select from '@material-ui/core//Select';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
-import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
 import List from '@material-ui/core/List';
-import React, { FC, useState } from 'react';
-import mapdata from 'components/map/map-point';
+import NativeSelect from '@material-ui/core/NativeSelect';
+import React, { VFC, FC, useState } from 'react';
+import updateMapInfo from 'lib/mapInfo/updateMapInfo';
 
 type Anchor = 'bottom';
-type dProps = {
-  id: number;
-};
 
 type upProps = {
   bool: boolean;
 };
 
-const TemporaryDrawer: FC<dProps> = (dProps) => {
-  const { id } = dProps;
+interface DbModel {
+  id?: number;
+  name?: string;
+  price?: number;
+  shower?: string;
+  water?: string;
+  toilet?: string;
+  roof?: string;
+  parking?: string;
+}
+
+const TemporaryDrawer: FC<DbModel> = (DbModel) => {
+  const { name, price, shower, water, toilet, roof, parking } = DbModel;
   const [state, setState] = React.useState({
     bottom: false,
   });
   const [open, setOpen] = React.useState(false);
+
+  const [campstate, setCampState] = React.useState({
+    cname: false,
+    name: name,
+    price: price,
+    shower: shower,
+    water: water,
+    toilet: toilet,
+    roof: roof,
+    parking: parking,
+  });
 
   const toggleDrawer =
     (anchor: Anchor, open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -53,16 +75,71 @@ const TemporaryDrawer: FC<dProps> = (dProps) => {
 
   const ListUpdate: FC<upProps> = (upProps) => {
     const { bool } = upProps;
+    const { id, name, price, shower, water, toilet, roof, parking } = DbModel;
+
     if (bool === true) {
-      return <ListDB id={id} />;
+      return (
+        <ListDB
+          id={id}
+          name={name}
+          price={price}
+          shower={shower}
+          water={water}
+          toilet={toilet}
+          roof={roof}
+          parking={parking}
+        />
+      );
     } else {
-      return <List></List>;
+      return <></>;
     }
   };
 
-  const ListDB: FC<dProps> = (dProps) => {
-    const { id } = dProps;
-    return <li>{id}</li>;
+  const SelectDown: React.VoidFunctionComponent<{ value: string | undefined }> = ({ value }) => {
+    return (
+      <NativeSelect
+        defaultValue={value}
+        inputProps={{
+          name: 'shower',
+          id: 'native',
+        }}
+      >
+        <option value={0}>無</option>
+        <option value={1}>有</option>
+        <option value={2}>不明</option>
+      </NativeSelect>
+    );
+  };
+
+  const ListDB: FC<DbModel> = (DbModel) => {
+    const { id, name, price, shower, water, toilet, roof, parking } = DbModel;
+
+    return (
+      <>
+        <li>場所：{name}</li>　<li>価格：{price}円</li>
+        <li>
+          シャワー：
+          <SelectDown value={shower} />
+        </li>
+        <li>
+          水道：
+          <SelectDown value={water} />
+        </li>
+        <li>
+          トイレ：
+          <SelectDown value={toilet} />
+        </li>
+        <li>
+          屋根：
+          <SelectDown value={roof} />
+        </li>
+        <li>
+          駐車場：
+          <SelectDown value={parking} />
+        </li>
+        {/* <Button onClick={updateMapInfo(id)}>アップデート</Button> */}
+      </>
+    );
   };
 
   return (
