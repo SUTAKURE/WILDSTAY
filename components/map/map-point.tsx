@@ -1,6 +1,6 @@
 import React from 'react';
 import { Marker, Popup } from 'react-leaflet';
-import TemporaryDrawer from 'components/Drawer/drawer]';
+import TemporaryDrawer from 'components/Drawer/drawer';
 import GetMapInfo from 'lib/getMapInfo/getmapinfo';
 
 import 'leaflet/dist/leaflet.css';
