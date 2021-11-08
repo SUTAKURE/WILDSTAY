@@ -33,11 +33,11 @@ const MapPoint = () => {
                   id={record.id}
                   name={record.name}
                   price={record.price}
-                  shower={numToItem(record.shower)}
-                  water={numToItem(record.water)}
-                  toilet={numToItem(record.toilet)}
-                  roof={numToItem(record.roof)}
-                  parking={numToItem(record.parking)}
+                  shower={record.shower}
+                  water={record.water}
+                  toilet={record.toilet}
+                  roof={record.roof}
+                  parking={record.parking}
                 />
               </ul>
             </Popup>

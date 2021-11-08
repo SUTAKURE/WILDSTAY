@@ -1,11 +1,11 @@
-import Select from '@material-ui/core//Select';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Drawer from '@material-ui/core/Drawer';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import List from '@material-ui/core/List';
-import NativeSelect from '@material-ui/core/NativeSelect';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import React, { VFC, FC, useState } from 'react';
 import updateMapInfo from 'lib/mapInfo/updateMapInfo';
 
@@ -19,11 +19,11 @@ interface DbModel {
   id?: number;
   name?: string;
   price?: number;
-  shower?: string;
-  water?: string;
-  toilet?: string;
-  roof?: string;
-  parking?: string;
+  shower?: number;
+  water?: number;
+  toilet?: number;
+  roof?: number;
+  parking?: number;
 }
 
 const TemporaryDrawer: FC<DbModel> = (DbModel) => {
@@ -34,7 +34,6 @@ const TemporaryDrawer: FC<DbModel> = (DbModel) => {
   const [open, setOpen] = React.useState(false);
 
   const [campstate, setCampState] = React.useState({
-    cname: false,
     name: name,
     price: price,
     shower: shower,
@@ -95,51 +94,47 @@ const TemporaryDrawer: FC<DbModel> = (DbModel) => {
     }
   };
 
-  const SelectDown: React.VoidFunctionComponent<{ value: string | undefined }> = ({ value }) => {
-    return (
-      <FormControl>
-        <InputLabel variant='standard' htmlFor='uncontrolled-native'></InputLabel>
-        <NativeSelect
-          defaultValue={'value'}
-          inputProps={{
-            name: 'select',
-            id: 'uncontrolled-native',
-          }}
-        >
-          <option value={0}>無</option>
-          <option value={1}>有</option>
-          <option value={2}>不明</option>
-        </NativeSelect>
-      </FormControl>
-    );
-  };
-
   const ListDB: FC<DbModel> = (DbModel) => {
     const { id, name, price, shower, water, toilet, roof, parking } = DbModel;
+
+    const handleChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
+      const shower = event.target.name as keyof typeof campstate;
+      setCampState({
+        ...campstate,
+        [shower]: event.target.value,
+      });
+    };
+
+    const SelectItem = ({ cname, name }: { cname: string; name: string }) => {
+      return (
+        <>
+          <InputLabel htmlFor={cname}>{name}</InputLabel>
+          <Select
+            native
+            // TODO: コンパイル的にはエラーだが、とりあえず動くのでリファクタリング対象
+            value={campstate[cname]}
+            onChange={handleChange}
+            inputProps={{
+              name: cname,
+              id: cname,
+            }}
+          >
+            <option value={0}>無</option>
+            <option value={1}>有</option>
+            <option value={2}>不明</option>
+          </Select>
+        </>
+      );
+    };
 
     return (
       <>
         <li>場所：{name}</li>　<li>価格：{price}円</li>
-        <li>
-          シャワー：
-          <SelectDown value={shower} />
-        </li>
-        <li>
-          水道：
-          <SelectDown value={water} />
-        </li>
-        <li>
-          トイレ：
-          <SelectDown value={toilet} />
-        </li>
-        <li>
-          屋根：
-          <SelectDown value={roof} />
-        </li>
-        <li>
-          駐車場：
-          <SelectDown value={parking} />
-        </li>
+        <SelectItem cname={'shower'} name={'シャワー'} />
+        <SelectItem cname={'water'} name={'水道'} />
+        <SelectItem cname={'toilet'} name={'トイレ'} />
+        <SelectItem cname={'roof'} name={'屋根'} />
+        <SelectItem cname={'parking'} name={'駐車場'} />
         {/* <Button onClick={updateMapInfo(id)}>アップデート</Button> */}
       </>
     );
