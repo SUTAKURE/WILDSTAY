@@ -97,17 +97,20 @@ const TemporaryDrawer: FC<DbModel> = (DbModel) => {
 
   const SelectDown: React.VoidFunctionComponent<{ value: string | undefined }> = ({ value }) => {
     return (
-      <NativeSelect
-        defaultValue={value}
-        inputProps={{
-          name: 'shower',
-          id: 'native',
-        }}
-      >
-        <option value={0}>無</option>
-        <option value={1}>有</option>
-        <option value={2}>不明</option>
-      </NativeSelect>
+      <FormControl>
+        <InputLabel variant='standard' htmlFor='uncontrolled-native'></InputLabel>
+        <NativeSelect
+          defaultValue={'value'}
+          inputProps={{
+            name: 'select',
+            id: 'uncontrolled-native',
+          }}
+        >
+          <option value={0}>無</option>
+          <option value={1}>有</option>
+          <option value={2}>不明</option>
+        </NativeSelect>
+      </FormControl>
     );
   };
 
