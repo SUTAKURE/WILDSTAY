@@ -1,27 +1,34 @@
-export default function UpdateMapInfo(
-  id: number,
-  title: string,
-  price: number,
-  shower: number,
-  water: number,
-  toilet: number,
-  roof: number,
-  parking: number,
-) {
-  const url = `/api/getMapInfo`;
-  const requestOptions = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      Id: id,
-      Title: title,
-      Price: price,
-      Shower: shower,
-      Water: water,
-      Toilet: toilet,
-      Roof: roof,
-      Parking: parking,
-    }),
+import React, { VFC, FC, useState } from 'react';
+
+const UpdateMapInfo =
+  (
+    id: number | undefined,
+    name: string | undefined,
+    price: number | undefined,
+    shower: number | undefined,
+    water: number | undefined,
+    toilet: number | undefined,
+    roof: number | undefined,
+    parking: number | undefined,
+  ) =>
+  (event: React.KeyboardEvent | React.MouseEvent) => {
+    console.log(id);
+    const url = `/api/updateMapInfo`;
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        Id: id,
+        Name: name,
+        Price: price,
+        Shower: shower,
+        Water: water,
+        Toilet: toilet,
+        Roof: roof,
+        Parking: parking,
+      }),
+    };
+    fetch(url, requestOptions);
   };
-  fetch(url, requestOptions);
-}
+
+export default UpdateMapInfo;

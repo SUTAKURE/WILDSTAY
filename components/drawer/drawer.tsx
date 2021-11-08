@@ -135,7 +135,9 @@ const TemporaryDrawer: FC<DbModel> = (DbModel) => {
         <SelectItem cname={'toilet'} name={'トイレ'} />
         <SelectItem cname={'roof'} name={'屋根'} />
         <SelectItem cname={'parking'} name={'駐車場'} />
-        {/* <Button onClick={updateMapInfo(id)}>アップデート</Button> */}
+        <Button onClick={updateMapInfo(id, name, price, shower, water, toilet, roof, parking)}>
+          アップデート
+        </Button>
       </>
     );
   };

@@ -18,6 +18,7 @@ const MapPoint = () => {
               <ul>
                 {record.name}
                 <li>価格：{record.price}円</li>
+                <li>シャワー：{numToItem(record.shower)}</li>
                 <li>トイレ：{numToItem(record.toilet)}</li>
                 <li>水道：{numToItem(record.water)}</li>
                 <li>屋根：{numToItem(record.roof)}</li>
