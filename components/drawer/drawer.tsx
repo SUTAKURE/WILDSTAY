@@ -56,7 +56,7 @@ const TemporaryDrawer: FC<dProps> = (dProps) => {
     if (bool === true) {
       return <ListDB id={id} />;
     } else {
-      return <List>bbb</List>;
+      return <List></List>;
     }
   };
 
