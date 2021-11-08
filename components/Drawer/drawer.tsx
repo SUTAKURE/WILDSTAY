@@ -5,14 +5,11 @@ import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import * as React from 'react';
 
-type Anchor = 'top' | 'left' | 'bottom' | 'right';
+type Anchor = 'bottom';
 
 export default function TemporaryDrawer() {
   const [state, setState] = React.useState({
-    top: false,
-    left: false,
     bottom: false,
-    right: false,
   });
 
   const toggleDrawer =
@@ -30,20 +27,18 @@ export default function TemporaryDrawer() {
 
   const list = (anchor: Anchor) => (
     <Box
-      sx={{ width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
+      sx={{ width: '100%' }}
       role='presentation'
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <List></List>
-      <Divider />
-      <List></List>
+      <List>{'データを更新する'} </List>
     </Box>
   );
 
   return (
     <div>
-      {(['left', 'right', 'top', 'bottom'] as const).map((anchor) => (
+      {(['bottom'] as const).map((anchor) => (
         <React.Fragment key={anchor}>
           <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
           <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>

@@ -1,5 +1,4 @@
 import dynamic from 'next/dynamic';
-import TemporaryDrawer from 'components/nav-bar/nav-var';
 
 function App() {
   const Map = dynamic(
@@ -9,7 +8,6 @@ function App() {
 
   return (
     <>
-      <TemporaryDrawer />
       <Map />
     </>
   );
