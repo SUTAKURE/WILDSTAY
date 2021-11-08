@@ -7,7 +7,7 @@ import React, { FC, useState } from 'react';
 import mapdata from 'components/map/map-point';
 
 type Anchor = 'bottom';
-type Props = {
+type dProps = {
   id: number;
 };
 
@@ -15,7 +15,8 @@ type upProps = {
   bool: boolean;
 };
 
-export default function TemporaryDrawer(props: Props) {
+const TemporaryDrawer: FC<dProps> = (dProps) => {
+  const { id } = dProps;
   const [state, setState] = React.useState({
     bottom: false,
   });
@@ -53,10 +54,15 @@ export default function TemporaryDrawer(props: Props) {
   const ListUpdate: FC<upProps> = (upProps) => {
     const { bool } = upProps;
     if (bool === true) {
-      return <List>aaaaa</List>;
+      return <ListDB id={id} />;
     } else {
       return <List>bbb</List>;
     }
+  };
+
+  const ListDB: FC<dProps> = (dProps) => {
+    const { id } = dProps;
+    return <li>{id}</li>;
   };
 
   return (
@@ -71,4 +77,6 @@ export default function TemporaryDrawer(props: Props) {
       ))}
     </div>
   );
-}
+};
+
+export default TemporaryDrawer;
