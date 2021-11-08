@@ -1,9 +1,13 @@
 import React from 'react';
 import { Marker, Popup } from 'react-leaflet';
-import TemporaryDrawer from 'components/Drawer/drawer';
+import TemporaryDrawer from 'components/drawer/drawer';
 import GetMapInfo from 'lib/getMapInfo/getmapinfo';
 
 import 'leaflet/dist/leaflet.css';
+
+type Props = {
+  children?: React.ReactNode;
+};
 
 const MapPoint = () => {
   const { data, isLoading, isError } = GetMapInfo();
@@ -29,7 +33,7 @@ const MapPoint = () => {
                 >
                   Google Mapへ移動
                 </a>
-                <TemporaryDrawer />
+                <TemporaryDrawer Props={record.id} />
               </ul>
             </Popup>
           </Marker>

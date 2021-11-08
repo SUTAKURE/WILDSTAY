@@ -3,14 +3,23 @@ import Button from '@material-ui/core/Button';
 import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
-import * as React from 'react';
+import React, { FC, useState } from 'react';
+import mapdata from 'components/map/map-point';
 
 type Anchor = 'bottom';
+type Props = {
+  id: number;
+};
 
-export default function TemporaryDrawer() {
+type upProps = {
+  bool: boolean;
+};
+
+export default function TemporaryDrawer(props: Props) {
   const [state, setState] = React.useState({
     bottom: false,
   });
+  const [open, setOpen] = React.useState(false);
 
   const toggleDrawer =
     (anchor: Anchor, open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
@@ -25,16 +34,30 @@ export default function TemporaryDrawer() {
       setState({ ...state, [anchor]: open });
     };
 
+  const dataUpdate = (topen: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+    setOpen(topen);
+  };
+
   const list = (anchor: Anchor) => (
     <Box
       sx={{ width: '100%' }}
       role='presentation'
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
+      onClick={toggleDrawer(anchor, true)}
+      onKeyDown={toggleDrawer(anchor, true)}
     >
-      <List>{'データを更新する'} </List>
+      <Button onClick={dataUpdate(!open)}>データを更新する</Button>
+      <ListUpdate bool={open} />
     </Box>
   );
+
+  const ListUpdate: FC<upProps> = (upProps) => {
+    const { bool } = upProps;
+    if (bool === true) {
+      return <List>aaaaa</List>;
+    } else {
+      return <List>bbb</List>;
+    }
+  };
 
   return (
     <div>
