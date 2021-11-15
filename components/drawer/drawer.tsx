@@ -1,15 +1,11 @@
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Drawer from '@material-ui/core/Drawer';
-import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
-import List from '@material-ui/core/List';
-import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import React, { VFC, FC, useState } from 'react';
+import TextField from '@material-ui/core/TextField';
+import React, { FC, useState } from 'react';
 import updateMapInfo from 'lib/mapInfo/updateMapInfo';
-
-type Anchor = 'bottom';
 
 type upProps = {
   bool: boolean;
@@ -28,9 +24,7 @@ interface DBModel {
 
 const TemporaryDrawer: FC<DBModel> = (DBModel) => {
   const { id, name, price, shower, water, toilet, roof, parking } = DBModel;
-  const [state, setState] = useState({
-    bottom: false,
-  });
+  const [state, setState] = useState(false);
   const [open, setOpen] = React.useState(false);
   const [campstate, setCampState] = useState({
     ccid: id,
@@ -43,30 +37,16 @@ const TemporaryDrawer: FC<DBModel> = (DBModel) => {
     ccparking: parking,
   });
 
-  const toggleDrawer =
-    (anchor: Anchor, open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-      if (
-        event.type === 'keydown' &&
-        ((event as React.KeyboardEvent).key === 'Tab' ||
-          (event as React.KeyboardEvent).key === 'Shift')
-      ) {
-        return;
-      }
-
-      setState({ ...state, [anchor]: open });
-    };
+  const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+    setState(open);
+  };
 
   const dataUpdate = (topen: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
     setOpen(topen);
   };
 
-  const list = (anchor: Anchor) => (
-    <Box
-      sx={{ width: '100%' }}
-      role='presentation'
-      onClick={toggleDrawer(anchor, true)}
-      onKeyDown={toggleDrawer(anchor, true)}
-    >
+  const list = () => (
+    <Box sx={{ width: '100%' }} role='presentation' onClick={toggleDrawer(true)}>
       <Button onClick={dataUpdate(!open)}>データを更新する</Button>
       <ListUpdate bool={open} />
     </Box>
@@ -129,9 +109,14 @@ const TemporaryDrawer: FC<DBModel> = (DBModel) => {
       );
     };
 
+    const [ss, setSS] = React.useState('fasse');
+    const shandleChange = (event) => {
+      setSS(event.target.value);
+    };
+
     return (
       <>
-        <li>場所：{name}</li>　<li>価格：{price}円</li>
+        <TextField value={ss} onChange={shandleChange} />
         <SelectItem cname={'ccshower'} name={'シャワー'} />
         <SelectItem cname={'ccwater'} name={'水道'} />
         <SelectItem cname={'cctoilet'} name={'トイレ'} />
@@ -157,14 +142,12 @@ const TemporaryDrawer: FC<DBModel> = (DBModel) => {
 
   return (
     <div>
-      {(['bottom'] as const).map((anchor) => (
-        <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
-          <Drawer anchor={anchor} open={state[anchor]} onClose={toggleDrawer(anchor, false)}>
-            {list(anchor)}
-          </Drawer>
-        </React.Fragment>
-      ))}
+      <React.Fragment key={'bottom'}>
+        <Button onClick={toggleDrawer(true)}>クリック</Button>
+        <Drawer anchor='bottom' open={state} onClose={toggleDrawer(false)}>
+          {list()}
+        </Drawer>
+      </React.Fragment>
     </div>
   );
 };
