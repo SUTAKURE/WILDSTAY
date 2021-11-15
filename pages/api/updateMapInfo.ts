@@ -4,10 +4,10 @@ import sqlite3 from 'sqlite3';
 
 export default async function updateMapInfo(req: NextApiRequest, res: NextApiResponse) {
   const db = await open({ filename: './mydb.sqlite', driver: sqlite3.Database });
-  const { Id, Name, Price, Shower, Water, Toilet, Roof, Parking } = req.body;
+  const { Id, Name, Price, Shower, Toilet, Water, Roof, Parking } = req.body;
 
-  let data = [Shower, Id];
-  let sql = `UPDATE mapinfo SET Shower = ? WHERE id = ?`;
+  let data = [Shower, Toilet, Water, Roof, Parking, Id];
+  let sql = `UPDATE mapinfo SET Shower = ?,Toilet = ?, Water = ?, Roof=? ,Parking = ? WHERE id = ?`;
 
   await db.run(sql, data, function (err: any) {
     if (err) {
