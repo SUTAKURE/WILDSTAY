@@ -12,14 +12,13 @@ const UpdateMapInfo =
     parking: number | undefined,
   ) =>
   (event: React.KeyboardEvent | React.MouseEvent) => {
-    console.log(typeof name);
     const url = `/api/updateMapInfo`;
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         Id: id,
-        Name: name,
+        Name: Number(name),
         Price: price,
         Shower: shower,
         Water: water,
@@ -30,6 +29,7 @@ const UpdateMapInfo =
     };
 
     fetch(url, requestOptions);
+    location.reload();
   };
 
 export default UpdateMapInfo;

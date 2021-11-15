@@ -145,7 +145,7 @@ const TemporaryDrawer: FC<DBModel> = (DBModel) => {
     return (
       <>
         <SelectName cname={'ccname'} name={'場所'} />
-        <SelectPrice cname={'ccpricw'} name={'宿泊代'} />
+        <SelectPrice cname={'ccprice'} name={'宿泊代'} />
         <SelectItem cname={'ccshower'} name={'シャワー'} />
         <SelectItem cname={'ccwater'} name={'水道'} />
         <SelectItem cname={'cctoilet'} name={'トイレ'} />
