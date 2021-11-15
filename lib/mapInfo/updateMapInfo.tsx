@@ -3,7 +3,7 @@ import React, { VFC, FC, useState } from 'react';
 const UpdateMapInfo =
   (
     id: number | undefined,
-    name: string | undefined,
+    name: number | undefined,
     price: number | undefined,
     shower: number | undefined,
     water: number | undefined,
@@ -12,7 +12,7 @@ const UpdateMapInfo =
     parking: number | undefined,
   ) =>
   (event: React.KeyboardEvent | React.MouseEvent) => {
-    console.log(id);
+    console.log(typeof name);
     const url = `/api/updateMapInfo`;
     const requestOptions = {
       method: 'POST',
@@ -28,6 +28,7 @@ const UpdateMapInfo =
         Parking: parking,
       }),
     };
+
     fetch(url, requestOptions);
   };
 

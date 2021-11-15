@@ -16,8 +16,8 @@ const MapPoint = () => {
           <Marker key={index} position={[record.lat, record.lon]}>
             <Popup>
               <ul>
-                {record.name}
-                <li>価格：{record.price}円</li>
+                <li>場所：{numToName(record.name)}</li>
+                <li>価格：{numToPrice(record.price)}</li>
                 <li>シャワー：{numToItem(record.shower)}</li>
                 <li>トイレ：{numToItem(record.toilet)}</li>
                 <li>水道：{numToItem(record.water)}</li>
@@ -48,6 +48,36 @@ const MapPoint = () => {
     </>
   );
 };
+
+function numToName(n: number): string {
+  let item = '';
+
+  switch (n) {
+    case 0:
+      item = '道の駅';
+      break;
+
+    case 1:
+      item = '公園';
+      break;
+
+    case 2:
+      item = '砂浜';
+      break;
+
+    case 3:
+      item = '不明';
+      break;
+  }
+
+  return item;
+}
+
+function numToPrice(n: number): string {
+  const price = n * 100;
+
+  return price + '円';
+}
 
 function numToItem(n: number): string {
   let item = '不明';

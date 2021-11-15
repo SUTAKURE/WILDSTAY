@@ -4,7 +4,7 @@ import Drawer from '@material-ui/core/Drawer';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useEffect, useRef } from 'react';
 import updateMapInfo from 'lib/mapInfo/updateMapInfo';
 
 type upProps = {
@@ -13,7 +13,7 @@ type upProps = {
 
 interface DBModel {
   id?: number;
-  name?: string;
+  name?: number;
   price?: number;
   shower?: number;
   water?: number;
@@ -46,7 +46,7 @@ const TemporaryDrawer: FC<DBModel> = (DBModel) => {
   };
 
   const list = () => (
-    <Box sx={{ width: '100%' }} role='presentation' onClick={toggleDrawer(true)}>
+    <Box sx={{ width: '100%' }} onClick={toggleDrawer(true)}>
       <Button onClick={dataUpdate(!open)}>データを更新する</Button>
       <ListUpdate bool={open} />
     </Box>
@@ -54,21 +54,9 @@ const TemporaryDrawer: FC<DBModel> = (DBModel) => {
 
   const ListUpdate: FC<upProps> = (upProps) => {
     const { bool } = upProps;
-    const { id, name, price, shower, water, toilet, roof, parking } = DBModel;
 
     if (bool === true) {
-      return (
-        <ListDB
-          id={id}
-          name={name}
-          price={price}
-          shower={shower}
-          water={water}
-          toilet={toilet}
-          roof={roof}
-          parking={parking}
-        />
-      );
+      return <ListDB />;
     } else {
       return <></>;
     }
@@ -80,13 +68,56 @@ const TemporaryDrawer: FC<DBModel> = (DBModel) => {
     const handleChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
       const value = event.target.value as keyof typeof campstate;
       const name = event.target.name as keyof typeof campstate;
-      console.log(value);
-      console.log(name);
 
       setCampState({
         ...campstate,
         [name]: value,
       });
+    };
+
+    const SelectName = ({ cname, name }: { cname: string; name: string }) => {
+      return (
+        <>
+          <InputLabel htmlFor={cname}>{name}</InputLabel>
+          <Select
+            native
+            // TODO: コンパイル的にはエラーだが、とりあえず動くのでリファクタリング対象
+            value={campstate[cname]}
+            onChange={handleChange}
+            inputProps={{
+              name: cname,
+              id: cname,
+            }}
+          >
+            <option value={0}>道の駅</option>
+            <option value={1}>公園</option>
+            <option value={2}>砂浜</option>
+            <option value={3}>不明</option>
+          </Select>
+        </>
+      );
+    };
+
+    const SelectPrice = ({ cname, name }: { cname: string; name: string }) => {
+      return (
+        <>
+          <InputLabel htmlFor={cname}>{name}</InputLabel>
+          <Select
+            native
+            // TODO: コンパイル的にはエラーだが、とりあえず動くのでリファクタリング対象
+            value={campstate[cname]}
+            onChange={handleChange}
+            inputProps={{
+              name: cname,
+              id: cname,
+            }}
+          >
+            <option value={0}>0円</option>
+            <option value={1}>100円</option>
+            <option value={2}>200円</option>
+          </Select>
+        </>
+      );
     };
 
     const SelectItem = ({ cname, name }: { cname: string; name: string }) => {
@@ -113,14 +144,8 @@ const TemporaryDrawer: FC<DBModel> = (DBModel) => {
 
     return (
       <>
-        <TextField
-          value={campstate.ccname}
-          onChange={handleChange}
-          inputProps={{
-            name: 'ccname',
-            id: 'ccname',
-          }}
-        />
+        <SelectName cname={'ccname'} name={'場所'} />
+        <SelectPrice cname={'ccpricw'} name={'宿泊代'} />
         <SelectItem cname={'ccshower'} name={'シャワー'} />
         <SelectItem cname={'ccwater'} name={'水道'} />
         <SelectItem cname={'cctoilet'} name={'トイレ'} />

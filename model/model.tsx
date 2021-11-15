@@ -1,12 +1,12 @@
 export type Model = {
-  data: DbModel[];
+  data: DBModel[];
   isLoading: any;
   isError: any;
 };
 
-export interface DbModel {
+export interface DBModel {
   id: number;
-  name: string;
+  name: number;
   lat: number;
   lon: number;
   price: number;
