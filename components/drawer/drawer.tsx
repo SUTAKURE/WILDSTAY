@@ -15,7 +15,7 @@ type upProps = {
   bool: boolean;
 };
 
-interface DbModel {
+interface DBModel {
   id?: number;
   name?: string;
   price?: number;
@@ -26,21 +26,21 @@ interface DbModel {
   parking?: number;
 }
 
-const TemporaryDrawer: FC<DbModel> = (DbModel) => {
-  const { name, price, shower, water, toilet, roof, parking } = DbModel;
-  const [state, setState] = React.useState({
+const TemporaryDrawer: FC<DBModel> = (DBModel) => {
+  const { id, name, price, shower, water, toilet, roof, parking } = DBModel;
+  const [state, setState] = useState({
     bottom: false,
   });
   const [open, setOpen] = React.useState(false);
-
-  const [campstate, setCampState] = React.useState({
-    name: name,
-    price: price,
-    shower: shower,
-    water: water,
-    toilet: toilet,
-    roof: roof,
-    parking: parking,
+  const [campstate, setCampState] = useState({
+    ccid: id,
+    ccname: name,
+    ccprice: price,
+    ccshower: shower,
+    ccwater: water,
+    cctoilet: toilet,
+    ccroof: roof,
+    ccparking: parking,
   });
 
   const toggleDrawer =
@@ -74,7 +74,7 @@ const TemporaryDrawer: FC<DbModel> = (DbModel) => {
 
   const ListUpdate: FC<upProps> = (upProps) => {
     const { bool } = upProps;
-    const { id, name, price, shower, water, toilet, roof, parking } = DbModel;
+    const { id, name, price, shower, water, toilet, roof, parking } = DBModel;
 
     if (bool === true) {
       return (
@@ -94,14 +94,16 @@ const TemporaryDrawer: FC<DbModel> = (DbModel) => {
     }
   };
 
-  const ListDB: FC<DbModel> = (DbModel) => {
-    const { id, name, price, shower, water, toilet, roof, parking } = DbModel;
+  const ListDB: FC<DBModel> = (DBModel) => {
+    const { id, name, price, shower, water, toilet, roof, parking } = DBModel;
 
     const handleChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
-      const shower = event.target.name as keyof typeof campstate;
+      const value = event.target.value as keyof typeof campstate;
+      const name = event.target.name as keyof typeof campstate;
+
       setCampState({
         ...campstate,
-        [shower]: event.target.value,
+        [name]: value,
       });
     };
 
@@ -130,12 +132,23 @@ const TemporaryDrawer: FC<DbModel> = (DbModel) => {
     return (
       <>
         <li>場所：{name}</li>　<li>価格：{price}円</li>
-        <SelectItem cname={'shower'} name={'シャワー'} />
-        <SelectItem cname={'water'} name={'水道'} />
-        <SelectItem cname={'toilet'} name={'トイレ'} />
-        <SelectItem cname={'roof'} name={'屋根'} />
-        <SelectItem cname={'parking'} name={'駐車場'} />
-        <Button onClick={updateMapInfo(id, name, price, shower, water, toilet, roof, parking)}>
+        <SelectItem cname={'ccshower'} name={'シャワー'} />
+        <SelectItem cname={'ccwater'} name={'水道'} />
+        <SelectItem cname={'cctoilet'} name={'トイレ'} />
+        <SelectItem cname={'ccroof'} name={'屋根'} />
+        <SelectItem cname={'ccparking'} name={'駐車場'} />
+        <Button
+          onClick={updateMapInfo(
+            campstate.ccid,
+            campstate.ccname,
+            campstate.ccprice,
+            campstate.ccshower,
+            campstate.ccwater,
+            campstate.cctoilet,
+            campstate.ccroof,
+            campstate.ccparking,
+          )}
+        >
           アップデート
         </Button>
       </>

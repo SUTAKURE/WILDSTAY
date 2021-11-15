@@ -1,4 +1,5 @@
 import dynamic from 'next/dynamic';
+import React from 'react';
 
 function App() {
   const Map = dynamic(
@@ -8,7 +9,9 @@ function App() {
 
   return (
     <>
-      <Map />
+      <React.StrictMode>
+        <Map />
+      </React.StrictMode>
     </>
   );
 }
