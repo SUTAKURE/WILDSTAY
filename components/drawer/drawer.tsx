@@ -80,6 +80,8 @@ const TemporaryDrawer: FC<DBModel> = (DBModel) => {
     const handleChange = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
       const value = event.target.value as keyof typeof campstate;
       const name = event.target.name as keyof typeof campstate;
+      console.log(value);
+      console.log(name);
 
       setCampState({
         ...campstate,
@@ -109,14 +111,16 @@ const TemporaryDrawer: FC<DBModel> = (DBModel) => {
       );
     };
 
-    const [ss, setSS] = React.useState('fasse');
-    const shandleChange = (event) => {
-      setSS(event.target.value);
-    };
-
     return (
       <>
-        <TextField value={ss} onChange={shandleChange} />
+        <TextField
+          value={campstate.ccname}
+          onChange={handleChange}
+          inputProps={{
+            name: 'ccname',
+            id: 'ccname',
+          }}
+        />
         <SelectItem cname={'ccshower'} name={'シャワー'} />
         <SelectItem cname={'ccwater'} name={'水道'} />
         <SelectItem cname={'cctoilet'} name={'トイレ'} />
