@@ -1,6 +1,6 @@
 import React from 'react';
 import { Marker, Popup } from 'react-leaflet';
-import TemporaryDrawer from 'components/drawer/drawer';
+import DetailModal from 'components/modal/modal';
 import GetMapInfo from 'lib/mapInfo/getMapInfo';
 
 import 'leaflet/dist/leaflet.css';
@@ -30,7 +30,7 @@ const MapPoint = () => {
                 >
                   Google Mapへ移動
                 </a>
-                <TemporaryDrawer
+                <DetailModal
                   id={record.id}
                   name={record.name}
                   price={record.price}
@@ -39,6 +39,8 @@ const MapPoint = () => {
                   toilet={record.toilet}
                   roof={record.roof}
                   parking={record.parking}
+                  lat={record.lat}
+                  lon={record.lon}
                 />
               </ul>
             </Popup>
