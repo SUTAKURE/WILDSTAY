@@ -16,5 +16,5 @@ export default async function updateMapInfo(req: NextApiRequest, res: NextApiRes
     console.log(`Row(s) updated`);
   });
 
-  res.status(200);
+  res.status(200).end();
 }

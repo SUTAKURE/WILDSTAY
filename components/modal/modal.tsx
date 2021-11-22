@@ -1,8 +1,8 @@
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import Modal from '@material-ui/core/Modal';
-import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
+import ClearIcon from '@material-ui/icons/Clear';
 import React, { FC, useState } from 'react';
 import { UpdateMapList } from './updateMapList';
 import { DBModel } from 'model/model';
@@ -33,7 +33,9 @@ const DetailModal: FC<DBModel> = (DBModel) => {
 
     return (
       <Box sx={{ width: '100%' }}>
-        <Button onClick={dataUpdate(!dataUpdateOpen)}>データを更新する</Button>
+        <div style={{ float: 'right' }}>
+          <Button onClick={dataUpdate(!dataUpdateOpen)} startIcon={<ClearIcon />}></Button>
+        </div>
         <DisplayUpdateMapList isClicked={dataUpdateOpen} />
       </Box>
     );
@@ -50,7 +52,7 @@ const DetailModal: FC<DBModel> = (DBModel) => {
 
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
+      <Button onClick={handleOpen}>設定を編集</Button>
       <Modal
         open={dataUpdateOpen}
         onClose={handleClose}
@@ -58,11 +60,8 @@ const DetailModal: FC<DBModel> = (DBModel) => {
         aria-describedby='modal-modal-description'
       >
         <Box sx={style}>
-          <Typography id='modal-modal-title' variant='h6' component='h2'>
-            Text in a modal
-          </Typography>
+          <Typography id='modal-modal-title' variant='h6' component='h2'></Typography>
           <UpdateDataButton />
-          <TextField />
         </Box>
       </Modal>
     </div>

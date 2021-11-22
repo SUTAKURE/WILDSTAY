@@ -1,6 +1,7 @@
 import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
+import TextField from '@material-ui/core/TextField';
 import React, { FC, useState } from 'react';
 import updateMapInfo from 'lib/mapInfo/updateMapInfo';
 import { DBModel } from 'model/model';
@@ -30,6 +31,7 @@ export const UpdateMapList = ({ DBModel }: { DBModel: DBModel }) => {
     });
   };
 
+  // 宿泊カテゴリー選択
   const SelectName = ({ itemName, displayName }: { itemName: string; displayName: string }) => {
     return (
       <>
@@ -53,6 +55,7 @@ export const UpdateMapList = ({ DBModel }: { DBModel: DBModel }) => {
     );
   };
 
+  // 宿泊にかかる費用を表示（1500円まで)
   const SelectPrice = ({ itemName, displayName }: { itemName: string; displayName: string }) => {
     return (
       <>
@@ -70,6 +73,19 @@ export const UpdateMapList = ({ DBModel }: { DBModel: DBModel }) => {
           <option value={0}>0円</option>
           <option value={1}>100円</option>
           <option value={2}>200円</option>
+          <option value={3}>300円</option>
+          <option value={4}>400円</option>
+          <option value={5}>500円</option>
+          <option value={6}>600円</option>
+          <option value={7}>700円</option>
+          <option value={8}>800円</option>
+          <option value={9}>900円</option>
+          <option value={10}>1000円</option>
+          <option value={11}>1100円</option>
+          <option value={12}>1200円</option>
+          <option value={13}>1300円</option>
+          <option value={14}>1400円</option>
+          <option value={15}>1500円</option>
         </Select>
       </>
     );
@@ -106,20 +122,23 @@ export const UpdateMapList = ({ DBModel }: { DBModel: DBModel }) => {
       <SelectItem itemName={'toilet'} displayName={'トイレ'} />
       <SelectItem itemName={'roof'} displayName={'屋根'} />
       <SelectItem itemName={'parking'} displayName={'駐車場'} />
-      <Button
-        onClick={updateMapInfo(
-          mapList.id,
-          mapList.name,
-          mapList.price,
-          mapList.shower,
-          mapList.water,
-          mapList.toilet,
-          mapList.roof,
-          mapList.parking,
-        )}
-      >
-        アップデート
-      </Button>
+
+      <div style={{ float: 'right' }}>
+        <Button
+          onClick={updateMapInfo(
+            mapList.id,
+            mapList.name,
+            mapList.price,
+            mapList.shower,
+            mapList.water,
+            mapList.toilet,
+            mapList.roof,
+            mapList.parking,
+          )}
+        >
+          設定を変更する
+        </Button>
+      </div>
     </>
   );
 };
