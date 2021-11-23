@@ -1,23 +1,24 @@
 import Button from '@material-ui/core/Button';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
-import React, { FC, useState } from 'react';
-import updateMapInfo from 'lib/mapInfo/updateMapInfo';
+import { useRouter } from 'next/router';
+import React, { useState } from 'react';
+import insertMapInfo from 'lib/mapInfo/insertMapInfo';
 import { DBModel } from 'model/model';
 
-// アップデート対象のマップ項目を表示する
-export const UpdateMapList = ({ DBModel }: { DBModel: DBModel }) => {
-  const { id, name, price, shower, water, toilet, roof, parking } = DBModel;
+const App = ({ DBModel }: { DBModel: DBModel }) => {
+  const router = useRouter();
 
   const [mapList, setMapList] = useState({
-    id: id,
-    name: name,
-    price: price,
-    shower: shower,
-    water: water,
-    toilet: toilet,
-    roof: roof,
-    parking: parking,
+    lat: Number(router.query.lat),
+    lon: Number(router.query.lon),
+    name: 0,
+    price: 0,
+    shower: 0,
+    water: 0,
+    toilet: 0,
+    roof: 0,
+    parking: 0,
   });
 
   const changeMapListState = (event: React.ChangeEvent<{ name?: string; value: unknown }>) => {
@@ -121,11 +122,11 @@ export const UpdateMapList = ({ DBModel }: { DBModel: DBModel }) => {
       <SelectItem itemName={'toilet'} displayName={'トイレ'} />
       <SelectItem itemName={'roof'} displayName={'屋根'} />
       <SelectItem itemName={'parking'} displayName={'駐車場'} />
-
       <div style={{ float: 'right' }}>
         <Button
-          onClick={updateMapInfo(
-            mapList.id,
+          onClick={insertMapInfo(
+            mapList.lat,
+            mapList.lon,
             mapList.name,
             mapList.price,
             mapList.shower,
@@ -141,3 +142,5 @@ export const UpdateMapList = ({ DBModel }: { DBModel: DBModel }) => {
     </>
   );
 };
+
+export default App;

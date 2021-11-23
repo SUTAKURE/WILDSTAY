@@ -5,7 +5,7 @@ import GetMapInfo from 'lib/mapInfo/getMapInfo';
 
 import 'leaflet/dist/leaflet.css';
 
-const MapPoint = () => {
+const MapList = () => {
   const { data, isLoading, isError } = GetMapInfo();
   if (isLoading) return <div>Loading</div>;
   if (isError) return <div>Error</div>;
@@ -101,4 +101,4 @@ function generateGoogleMapUrl(lat: number, lon: number): string {
   );
 }
 
-export default MapPoint;
+export default MapList;
